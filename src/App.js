@@ -1,8 +1,13 @@
-import './App.css';
+import "./App.css";
 
 import React from "react";
 import { Grid, Typography, Paper } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import UserDetail from "./components/UserDetail";
@@ -45,6 +50,6 @@ const App = (props) => {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
