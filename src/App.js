@@ -1,15 +1,19 @@
-import './App.css';
+import "./App.css";
 
 import React from "react";
 import { Grid, Typography, Paper } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
 
-// Layout component để render TopBar và nội dung
 const Layout = () => {
   return (
     <div>
@@ -46,6 +50,6 @@ const App = (props) => {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
