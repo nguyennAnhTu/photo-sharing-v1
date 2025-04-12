@@ -9,7 +9,6 @@ import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
 
-// Layout component để render TopBar và nội dung
 const Layout = () => {
   return (
     <div>
