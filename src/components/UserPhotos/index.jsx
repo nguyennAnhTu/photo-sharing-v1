@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Grid,
@@ -12,15 +12,41 @@ import { Link, useParams } from "react-router-dom";
 
 import "./styles.css";
 import models from "../../modelData/models";
+import fetchModel from "../../lib/fetchModelData";
 
 /**
  * Define UserPhotos, a React component of Project 4.
  */
 function UserPhotos() {
     const { userId } = useParams();
-    const photos = models.photoOfUserModel(userId);
-    const user = models.userModel(userId);
+    //const photos = models.photoOfUserModel(userId);
+    //const user = models.userModel(userId);
+    const [photos, setPhotos] = useState();
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
 
+    useEffect(() => {
+      const fetchPhotos = async () => {
+        try {
+          const userResponse = await fetchModel("/api/user/" + userId);
+          setUser(userResponse);
+
+          const response = await fetchModel("/api/photo/photosOfUser/" + userId);
+          console.log("start fetch photo");
+          console.log(response);
+          setPhotos(response.photos);
+        } catch(e) {
+          setError(e);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPhotos();
+    }, [userId])
+
+    if (loading) return <Typography>Loading...</Typography>;
+    if (error) return <Typography color="error">Error: {error}</Typography>;
     if (!user) {
       return <Typography variant="body1">User not found</Typography>;
     }

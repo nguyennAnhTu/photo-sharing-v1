@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Paper,
@@ -9,14 +9,33 @@ import { Link, useParams } from "react-router-dom";
 
 import "./styles.css";
 import models from "../../modelData/models";
+import fetchModel from "../../lib/fetchModelData";
 
 /**
  * Define UserDetail, a React component of Project 4.
  */
 function UserDetail() {
     const { userId } = useParams();
-    const user = models.userModel(userId);
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] =useState();
 
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const res = await fetchModel("/api/user/" + userId);
+          setUser(res);
+        } catch(e) {
+          setError(e);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchUser();
+    }, [userId])
+
+    if (loading) return <Typography>Loading...</Typography>;
+    if (error) return <Typography color="error">Error: {error}</Typography>;
     if (!user) {
       return <Typography variant="body1">User not found</Typography>;
     }
